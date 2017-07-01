@@ -1,18 +1,27 @@
-var loginInput, passwordInput, buttonLogin
+var socket;
+var emailInput, passwordInput, buttonLogin;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	background(0);
 
-	loginInput = createInput('');
+
+/* Necessário arrumar isso de uma forma melhor */
+/* Apenas para teste de servidor */
+	emailInput = createInput('');
 	passwordInput = createInput('', 'password');
 
 	buttonLogin = createButton('Enviar');
 	buttonLogin.mousePressed(login);
 
-	loginInput.position(windowWidth/2 - loginInput.width/2, windowHeight/2 + loginInput.height/2);
-	passwordInput.position(windowWidth/2 - passwordInput.width/2, windowHeight/2 + passwordInput.height + loginInput.height/2);
-	buttonLogin.position(windowWidth/2 - buttonLogin.width/2, windowHeight/2 + buttonLogin.height + passwordInput.height + loginInput.height/2);
+	buttonRegister = createButton('Registrar');
+	buttonRegister.mousePressed(register);
+
+	emailInput.position(windowWidth/2 - emailInput.width/2, windowHeight/2 + emailInput.height/2);
+	passwordInput.position(windowWidth/2 - passwordInput.width/2, windowHeight/2 + passwordInput.height + emailInput.height/2);
+	buttonLogin.position(windowWidth/2 - buttonLogin.width/2, windowHeight/2 + buttonLogin.height + passwordInput.height + emailInput.height/2);
+	buttonRegister.position(windowWidth/2 - buttonRegister.width/2, windowHeight/2 + buttonLogin.height + passwordInput.height + buttonLogin.height+ emailInput.height/2);
+
 }
 
 function draw() {
@@ -21,12 +30,24 @@ function draw() {
 
 function login() {
 
-	var playerData = {
-		"login" : loginInput.value(),
+	var accountData = {
+		"email" : emailInput.value(),
 		"password" : passwordInput.value()
 	};
 
-	console.log(playerData);
+	console.log(accountData);
 
-	httpPost('/login', playerData, 'json');
+	httpPost('/login', accountData, 'json');
+}
+
+function register() {
+
+	var accountData = {
+		"email" : emailInput.value(),
+		"password" : passwordInput.value()
+	};
+
+	console.log(accountData);
+
+	httpPost('/register', accountData, 'json');	
 }
